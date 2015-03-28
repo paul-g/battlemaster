@@ -1,5 +1,4 @@
 var ss;
-var ssCode;
 
 function ssConnect(serverAddr, onConnect) {
   console.log("Opening websocket to %s", serverAddr);
@@ -11,19 +10,18 @@ function ssConnect(serverAddr, onConnect) {
 }
 
 function ssJoinGame(code) {
-  ssCode = code;
   ss.send(JSON.stringify({
     subscribe: {
-      topic: ssCode,
+      topic: code,
       replayAfter: 0
     },
   }));
 }
 
-function ssSend(data) {
+function ssSend(code, data) {
   ss.send(JSON.stringify({
     send: {
-      topic: ssCode,
+      topic: code,
       data: data,
     },
   }))
@@ -31,7 +29,7 @@ function ssSend(data) {
 
 function ssOnEvent(onEvent) {
   ss.onmessage = function(event) {
-    console.log("received websocket event", event)
+    // console.log("received websocket event", event)
     var msg = JSON.parse(event.data)
     if (msg != null) {
       onEvent(msg);
