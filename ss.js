@@ -31,10 +31,10 @@ function ssSend(data) {
 
 function ssOnEvent(onEvent) {
   ss.onmessage = function(event) {
-    console.log("received event", event)
+    console.log("received websocket event", event)
     var msg = JSON.parse(event.data)
-    if (msg.Broadcast != null) {
-      onEvent(msg.Broadcast.Data.data);
+    if (msg != null) {
+      onEvent(msg);
     }
   };
 }
