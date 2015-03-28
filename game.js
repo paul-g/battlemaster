@@ -41,6 +41,9 @@ function Creature (id, attack, life, command, player) {
   this.attacks = function () {
     return this.command[this.currentStep] === 'A';
   }
+  this.isGatherer = function() {
+    return this.command[this.currentStep] === 'G';
+  }
   this.doAttack = function(creatures) {
     var c = this.nextCommand();
     console.log('Resolve attack command ' + c);
@@ -101,6 +104,16 @@ function Player (name, img, id, mana) {
       }
     this.creatures.splice(index, 1);
   }
+  this.gatherMana = function() {
+    this.mana += this.gatherers().length;
+  }
+  this.gatherers = function() {
+    var gatherers = [];
+    for (var i = 0; i < this.creatures.length; i++)
+      if (this.creatures[i].isGatherer())
+        gatherers.push(this.creatures[i]);
+    return gatherers;
+  }
 }
 
 function Game (player, opponent) {
@@ -138,6 +151,8 @@ function Game (player, opponent) {
   };
 
   this.gather = function() {
+    this.player.gatherMana();
+    this.opponent.gatherMana();
   };
 
   this.playerOne = function () {
