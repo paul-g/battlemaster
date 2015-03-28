@@ -35,6 +35,7 @@ function waitForConnection() {
     }
     this.gamePhase = game.phase;
   });
-}
-)();
 
+  ssConnect("ws://ss.abstractbinary.org:7001/ws", function() {
+  });
+})();
