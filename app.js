@@ -56,6 +56,12 @@
               name: self.loginName,
               cookie: cookie,
             }});
+            if (window.location.hash == "#test") {
+              ssSend(self.loginCode, {playerJoin: {
+                name: "yoda",
+                cookie: "the force"
+              }});
+            }
           } else if (event.Broadcast != null) {
             var bc = event.Broadcast.Data;
             if (bc.playerJoin != null) {
@@ -90,6 +96,10 @@
           self.screen = 'lobby';
         });
       });
+    }
+    if (window.location.hash == "#test") {
+      self.loginName = "dev";
+      self.doLogin();
     }
   }]);
 })();
