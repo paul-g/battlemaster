@@ -1,32 +1,21 @@
-function Creature (attack, life) {
-  this.attack = attack;
-  this.life = life;
-  this.img = 'img/battlemaster_fighter.png';
-}
 
-function Player (name, img) {
-  this.name = name;
-  this.img = img;
-  this.creatures = [];
-  this.print = function() {
-    console.log(name);
-  };
-  this.summon = function(attack, life) {
-    this.creatures.push(new Creature(attack, life));
-    console.log('Summoning creature, attack: ' + attack + ' life: ' + life);
-  }
+
+function waitForConnection() {
+  // TODO wait for other to connect
+  var opponent = new Player("Other Yoda", "img/hero2.jpg");
+  opponent.creatures = [new Creature(0, 1), new Creature(0, 1)];
+  return opponent;
 }
 
 (function () {
   var app = angular.module('battlemaster', []);
 
   var player = new Player("yoda", "img/hero2.jpg");
-  var opponent = new Player("Big Yoda", "img/hero2.jpg");
+  var opponent = waitForConnection();
 
-  // TODO sync these with the server
-  opponent.creatures = [new Creature(0, 1), new Creature(0, 1)];
+  var game = new Game(player, opponent);
 
-  app.controller('PlayerController', function() {
+  var playerController = app.controller('PlayerController', function() {
     this.players = [player, opponent];
     this.summon = function() {
       player.summon(
@@ -38,6 +27,11 @@ function Player (name, img) {
       attack: '0',
       life: '1'
     };
+    this.endPhase = function() {
+      game.endPhase();
+      this.gamePhase = game.phase;
+    }
+    this.gamePhase = game.phase;
   });
 }
 )();
