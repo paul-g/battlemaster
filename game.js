@@ -64,18 +64,21 @@ function Creature (id, attack, life, command, player) {
       for (var i = 0; i < creatures.length; i++)
         if (creatures[i].life < creature.life)
           creature = creatures[i];
-      console.log(this);
-      console.log('fights');
-      console.log(creature);
-      this.startFight();
-      creature.startFight();
-      this.fight(creature);
-      creature.fight(this);
-      this.endFight();
-      creature.endFight();
-    } else {
-      // TODO fight creature with highest health
+    } else if (c[1] === 'H') {
+      var creature = {life: '0'};
+      for (var i = 0; i < creatures.length; i++)
+        if (creatures[i].life > creature.life)
+          creature = creatures[i];
     }
+    console.log(this);
+    console.log('fights');
+    console.log(creature);
+    this.startFight();
+    creature.startFight();
+    this.fight(creature);
+    creature.fight(this);
+    this.endFight();
+    creature.endFight();
     this.moveToNextCommand();
   }
 }
