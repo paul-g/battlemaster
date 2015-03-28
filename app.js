@@ -1,5 +1,3 @@
-
-
 function waitForConnection() {
   // TODO wait for other to connect
   var opponent = new Player("Other Yoda", "img/hero2.jpg");
@@ -21,7 +19,7 @@ function waitForConnection() {
       player.summon(
         this.summonParams.attack,
         this.summonParams.life
-        );
+      );
     };
     this.summonParams = {
       attack: '0',
@@ -33,6 +31,7 @@ function waitForConnection() {
     }
     this.gamePhase = game.phase;
   });
-}
-)();
 
+  ssConnect("ws://ss.abstractbinary.org:7001/ws", function() {
+  });
+})();
