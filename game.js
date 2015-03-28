@@ -143,6 +143,12 @@ function Game (player, opponent) {
       case 'recruit':
         this.recruit();
         this.phase = 'gather';
+        // TODO copy other player's state
+//        var newpl = new Player("Big Yoda", "img/hero2.jpg", 1, 15);
+//        newpl.summon(2, 3, 'G');
+//        for (var k in newpl) 
+//          this.player[k] = newpl[k];
+//        console.log(this.opponent);
         break;
 //      case 'defend':
 //        this.defend();
