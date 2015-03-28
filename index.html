@@ -18,11 +18,12 @@
   <div class="row" >
     <div class="col-md-1">
       <img style="height:150px" class="img-circle" ng-src="{{ pc.players[0].img }}">
-      {{ pc.players[0].name }}
+      {{ pc.players[0].name }} {{ pc.players[0].id }}
     </div>
     <div class="col-md-offset-3 col-md-1">
       Attack: <input class="form-control" ng-model="pc.summonParams.attack">
       Life: <input class="form-control" ng-model="pc.summonParams.life">
+      Command: <input class="form-control" ng-model="pc.summonParams.command">
       <button class="btn btn-default" ng-click="pc.summon()">Summon</button>
     </div>
     <div class="col-md-1">
@@ -34,7 +35,7 @@
     </div>
     <div class="col-md-offset-3 col-md-1">
       <img style="height:150px" class="img-circle" ng-src="{{ pc.players[1].img }}">
-      {{ pc.players[1].name }}
+      {{ pc.players[1].name }} {{ pc.players[1].id }}
     </div>
   </div>
 
@@ -43,7 +44,7 @@
       <div ng-repeat="creature in pc.players[0].creatures">
         <div class=" col-md-4">
           <img ng-src="{{ creature.img }}">
-          {{ creature.attack }} / {{ creature.life }}
+          {{ creature.attack }} / {{ creature.life }}({{ creature.id }}) - {{creature.command}}
         </div>
       </div>
     </div>
@@ -51,7 +52,7 @@
       <div ng-repeat="creature in pc.players[1].creatures">
         <div class=" col-md-4">
           <img ng-src="{{ creature.img }}">
-          {{ creature.attack }} / {{ creature.life }}
+          {{ creature.attack }} / {{ creature.life }}({{ creature.id }}) - {{creature.command}}
         </div>
       </div>
     </div>
