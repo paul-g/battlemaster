@@ -114,12 +114,12 @@ function Game (player, opponent) {
     switch (this.phase) {
       case 'recruit':
         this.recruit();
-        this.phase = 'defend';
-        break;
-      case 'defend':
-        this.defend();
         this.phase = 'gather';
         break;
+//      case 'defend':
+//        this.defend();
+//        this.phase = 'gather';
+//        break;
       case 'gather':
         this.gather();
         this.phase = 'attack';
