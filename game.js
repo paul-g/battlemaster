@@ -108,14 +108,14 @@ function Player (name, img, id, mana) {
     return attackers;
   }
   this.removeCreature = function(creature) {
-    var index = 0;
+   var index = 0;
     for (var i = 0; i < this.creatures.length; i++)
       if (this.creatures[i].id === creature.id) {
         index = i;
         break;
       }
     this.creatures.splice(index, 1);
-  }
+ }
   this.gatherMana = function() {
     var gs = this.gatherers();
     for (var i = 0; i < gs.length; i++)
@@ -128,6 +128,12 @@ function Player (name, img, id, mana) {
       if (this.creatures[i].isGatherer())
         gatherers.push(this.creatures[i]);
     return gatherers;
+  }
+  this.checkEndGame = function() {
+    if (this.creatures.length === 0) {
+      this.img = 'img/player_dead.png';
+      return;
+    }
   }
 }
 
@@ -146,7 +152,7 @@ function Game (player, opponent) {
         // TODO copy other player's state
 //        var newpl = new Player("Big Yoda", "img/hero2.jpg", 1, 15);
 //        newpl.summon(2, 3, 'G');
-//        for (var k in newpl) 
+//        for (var k in newpl)
 //          this.player[k] = newpl[k];
 //        console.log(this.opponent);
         break;
@@ -160,9 +166,12 @@ function Game (player, opponent) {
         break;
       case 'attack':
         this.attack();
+        this.opponent.checkEndGame();
+        this.player.checkEndGame();
         this.phase = 'recruit';
         break;
     }
+
   }
 
   this.recruit = function() {
