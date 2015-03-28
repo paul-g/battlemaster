@@ -68,12 +68,13 @@ function Creature (id, attack, life, command, player) {
   }
 }
 
-function Player (name, img, id) {
+function Player (name, img, id, mana) {
   this.name = name;
   this.img = img;
   this.creatures = [];
   this.id = id;
   this.creatureId = 0;
+  this.mana = mana;
   this.print = function() {
     console.log(name);
   };
@@ -82,6 +83,7 @@ function Player (name, img, id) {
     this.creatureId++;
     this.creatures.push(new Creature(id, attack, life, command, this));
     console.log('Summoning creature, attack: ' + attack + ' life: ' + life);
+    this.mana = this.mana - (attack + life);
   }
   this.attackingCreatures = function () {
     var attackers = [];

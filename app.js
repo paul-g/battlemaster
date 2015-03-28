@@ -1,6 +1,6 @@
 function waitForConnection() {
   // TODO wait for other to connect
-  var opponent = new Player("Other Yoda", "img/hero2.jpg", 1);
+  var opponent = new Player("Other Yoda", "img/hero2.jpg", 1, 10);
   opponent.summon(1, 2, 'Ah');
   opponent.summon(1, 2, 'Ah');
   return opponent;
@@ -9,7 +9,7 @@ function waitForConnection() {
 (function () {
   var app = angular.module('battlemaster', []);
 
-  var player = new Player("yoda", "img/hero2.jpg", 2);
+  var player = new Player("yoda", "img/hero2.jpg", 2, 10);
   player.summon(1, 2, 'Ah');
   var opponent = waitForConnection();
 
@@ -18,15 +18,20 @@ function waitForConnection() {
   var playerController = app.controller('PlayerController', function() {
     this.players = [player, opponent];
     this.summon = function() {
+      if (this.manaCost() < player.mana && this.summonParams.life > 0)
       player.summon(
-        this.summonParams.attack,
-        this.summonParams.life,
+        parseInt(this.summonParams.attack),
+        parseInt(this.summonParams.life),
         this.summonParams.command
         );
     };
+    this.manaCost = function() {
+      return parseInt(this.summonParams.attack)
+             + parseInt(this.summonParams.life);
+    }
     this.summonParams = {
-      attack: '0',
-      life: '1',
+      attack: 0,
+      life: 1,
       command: 'Ah',
     };
     this.endPhase = function() {
