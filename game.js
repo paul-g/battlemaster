@@ -28,13 +28,10 @@ function Creature (id, attack, life, command, player) {
         this.owner.removeCreature(this);
       }
   }
-  this.nextCommand = function () {
-    if (this.currentStep === this.command.length)
-      this.currentStep = 0;
+  this.getNextCommand = function () {
     var c =this.command[this.currentStep];
     if (c === 'A') {
-      this.currentStep++;
-      c = 'A' + this.command[this.currentStep];
+      c = 'A' + this.command[this.currentStep + 1];
     }
     return c;
   }
@@ -44,8 +41,19 @@ function Creature (id, attack, life, command, player) {
   this.isGatherer = function() {
     return this.command[this.currentStep] === 'G';
   }
+  this.moveToNextCommand = function () {
+    if (this.command[this.currentStep] === 'A')
+      this.currentStep += 2;
+    else
+      this.currentStep++;
+    if (this.currentStep >= command.length)
+      this.currentStep = 0;
+  }
+  this.doGather = function() {
+    this.moveToNextCommand();
+  }
   this.doAttack = function(creatures) {
-    var c = this.nextCommand();
+    var c = this.getNextCommand();
     console.log('Resolve attack command ' + c);
     if (creatures.length === 0)
       return;
@@ -68,6 +76,7 @@ function Creature (id, attack, life, command, player) {
     } else {
       // TODO fight creature with highest health
     }
+    this.moveToNextCommand();
   }
 }
 
@@ -105,7 +114,10 @@ function Player (name, img, id, mana) {
     this.creatures.splice(index, 1);
   }
   this.gatherMana = function() {
-    this.mana += this.gatherers().length;
+    var gs = this.gatherers();
+    for (var i = 0; i < gs.length; i++)
+      gs[i].doGather();
+    this.mana += gs.length;
   }
   this.gatherers = function() {
     var gatherers = [];

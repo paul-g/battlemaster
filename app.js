@@ -10,7 +10,7 @@ function waitForConnection() {
   var app = angular.module('battlemaster', []);
 
   var player = new Player("yoda", "img/hero2.jpg", 2, 10);
-  player.summon(1, 2, 'Ah');
+  player.summon(0, 4, 'Ah');
   var opponent = waitForConnection();
 
   var game = new Game(player, opponent);
